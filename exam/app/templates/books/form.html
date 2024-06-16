@@ -1,0 +1,79 @@
+{% macro form_book(action_url, book = None, genres = None)%}
+<form action="{{ action_url }}" method="POST" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label for="name" class="form-label">Название</label>
+    <input
+      name="name"
+      type="text"
+      class="form-control"
+      id="name"
+      value="{{book.name or ''}}"
+      required      
+    />
+  </div>
+  <div class="mb-3">
+    <label for="author" class="form-label">Автор</label>
+    <input
+      name="author"
+      type="text"
+      class="form-control"
+      id="author"
+      value="{{book.author or ''}}"
+      required      
+    />
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Краткое описание</label>
+    <input
+      name="description"
+      type="text"
+      class="form-control"
+      id="description"
+      value="{{book.description or ''}}"
+      required    
+    />
+  </div>
+  <div class="mb-3">
+    <label for="year" class="form-label">Год издания</label>
+    <input
+      name="year"
+      type="text"
+      class="form-control"
+      id="year"
+      value="{{book.year or ''}}  " 
+      required      
+    />
+  </div>
+  <div class="mb-3">
+    <label for="publishing" class="form-label">Издательство</label>
+    <input
+      name="publishing"
+      type="text"
+      class="form-control"
+      id="publishing"
+      value="{{book.publishing or ''}}"
+      required      
+    />
+  </div>
+  <div class="mb-3">
+    <label for="pages" class="form-label">Объем</label>
+    <input
+      name="pages"
+      type="text"
+      class="form-control"
+      id="pages"
+      value="{{book.pages or ''}}"
+      required      
+    />
+  </div>
+  <div class="mb-3">
+      <label for="genres" class="form-label">Жанры</label>
+      <select class="form-control" name="genres" id="genres" multiple {% if request.endpoint == 'create' %} required {% endif %}>
+          {% for genre in genres %}
+          <option value="{{ genre.id }}" {% if book and genre.id in book.genre_ids %}selected{% endif %}>{{ genre.name }}</option>
+          {% endfor %}
+      </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+{% endmacro %}
